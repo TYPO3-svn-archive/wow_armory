@@ -17,21 +17,17 @@ class tx_wowarmory_guild extends tx_wowarmory_object{
   
   public function __get($name){
     switch($name){
+      case 'members': return $this->xml->guildInfo->guild->members;
       default: return parent::__get($name);// ask parent to handle
     }
-  }
-  
-  public function __toString(){
-    return sprintf('%s (%s)',$this->name,$this->realm);
   }
   
   public static function cmp($a,$b){
     return strcasecmp($a->name,$b->name);
   }
   
-  public static function query($guildname){
-    //return tx_wowarmory_object::query(sprintf('http://armory.wow-europe.com/guild-info.xml?gn=%s',$guildname));
-    return tx_wowarmory_object::query(sprintf('http://localhost/guild-info.xml?gn=%s',$guildname));
+  public static function query($realm,$guildname,$charname=''){
+    return tx_wowarmory_object::query('guild-info',sprintf('r=%s&gn=%s&cn=%s',urlencode($realm),urlencode($guildname),urlencode($charname)));
   }
   
 }

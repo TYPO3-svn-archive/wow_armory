@@ -9,6 +9,7 @@
 require_once('class.tx_wowarmory_object.php');// = parent
 require_once('class.tx_wowarmory_dungeon.php');// = child
 require_once('class.tx_wowarmory_character.php');// = child
+require_once('class.tx_wowarmory_guild.php');// = child
 require_once('class.tx_wowarmory_item.php');// = child
 
 class tx_wowarmory_armory {
@@ -38,12 +39,15 @@ class tx_wowarmory_armory {
   }
   
   public function getCharacter($realm,$name){
-    $query = tx_wowarmory_character::query($realm,$name);
-    return $query->asXML();
+    return new tx_wowarmory_character(tx_wowarmory_character::query($realm,$name));
+  }
+  
+  public function getGuild($realm,$name){
+    return new tx_wowarmory_guild(tx_wowarmory_guild::query($realm,$name));
   }
   
   public function getItem($itemID){
-    return new tx_wowarmory_item(tx_wowarmory_item::query($itemID));
+    return new tx_wowarmory_item($itemID);
   }
   
 }

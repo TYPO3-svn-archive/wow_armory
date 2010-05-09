@@ -67,6 +67,7 @@ class  tx_wowarmory_module1 extends t3lib_SCbase {
 				'1' => $LANG->getLL('page.1.title'),
 				'2' => $LANG->getLL('page.2.title'),
 				'3' => $LANG->getLL('page.3.title'),
+				'4' => $LANG->getLL('page.4.title'),
 			)
 		);
 		parent::menuConfig();
@@ -129,7 +130,8 @@ class  tx_wowarmory_module1 extends t3lib_SCbase {
 		switch((string)$this->MOD_SETTINGS['function']){
 			case 1: $this->content.=$this->doc->section($LANG->getLL('page.1.title'),$this->getPageDungeons(),0,1); break;
 			case 2: $this->content.=$this->doc->section($LANG->getLL('page.2.title'),$this->getPageCharacters(),0,1); break;
-			case 3: $this->content.=$this->doc->section($LANG->getLL('page.3.title'),$this->getPageItems(),0,1); break;
+			case 3: $this->content.=$this->doc->section($LANG->getLL('page.3.title'),$this->getPageGuild(),0,1); break;
+			case 4: $this->content.=$this->doc->section($LANG->getLL('page.4.title'),$this->getPageItems(),0,1); break;
 		}
 	}catch (Exception $e){
 		$this->content.=$this->doc->section('ERROR:',"<pre>\n".$e->getMessage()."\n".$e->getTraceAsString()."</pre>\n",0,1);
@@ -161,12 +163,30 @@ class  tx_wowarmory_module1 extends t3lib_SCbase {
 	
 	function getPageCharacters(){
     $character = $this->armory->getCharacter('Blackhand','Jobe');
-		return '<pre>'.htmlentities(strval($character)).'</pre>';
+		return '<pre>'.htmlentities($character).'</pre>';
+	}
+
+	function getPageGuild(){
+    $guild = $this->armory->getGuild('Blackhand','The Raven Claws');
+    $content .= "<table>\n";
+    $content .= "<tr><th><a href='#'>R</a></th><th>C</th><th>name</th><th>level</th><th>rank</th><th>achPoints</th></tr>\n";
+		foreach($guild->members->character as $character){
+      $content .= "<tr>";
+      $content .= sprintf("<td><img src='../res/icons/races/%d-%d.gif' /></td>",$character['raceId'],$character['genderId']);
+      $content .= sprintf("<td><img src='../res/icons/classes/%d.gif' /></td>",$character['classId']);
+      $content .= sprintf("<td><a href='http://armory.wow-europe.com/character-sheet.xml?%s' target='_blank'>%s</a></td>",$character['url'],$character['name']);
+      $content .= sprintf("<td>%s</td>",$character['level']);
+      $content .= sprintf("<td>%s</td>",$character['rank']);
+      $content .= sprintf("<td>%s</td>",$character['achPoints']);
+      $content .= "</tr>\n";
+    }
+    $content .= "</table>\n";
+		$content .= '<hr><pre>'.htmlentities($guild).'</pre>';
+    return $content;
 	}
 
 	function getPageItems(){
-    $item = $this->armory->getItem(47658);
-		return '<pre>'.htmlentities($item).'</pre>';
+    return $this->armory->getItem(47658);
 	}
 
 }

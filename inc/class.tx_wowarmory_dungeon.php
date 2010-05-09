@@ -44,8 +44,7 @@ class tx_wowarmory_dungeon extends tx_wowarmory_object{
   }
   
   public static function query(){
-    //return tx_wowarmory_object::query('http://eu.wowarmory.com/data/dungeonStrings.xml');
-    return tx_wowarmory_object::query('http://localhost/wowarmory/dungeonStrings.xml');
+    return parent::query('data/dungeonStrings');
   }
   
 }

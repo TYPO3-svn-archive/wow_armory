@@ -11,13 +11,29 @@ require_once('class.tx_wowarmory_object.php');// = parent
 
 class tx_wowarmory_item extends tx_wowarmory_object{
 
-  public function __construct(SimpleXMLElement $xml){
-    parent::__construct($xml);
+  private $data = array();
+
+  public function __construct($itemID){
+    $xml = self::query($itemID);// get data
+    if(!$xml->itemInfo->item)throw new Exception('no valid item');// check data
+    $this->data = tx_wowarmory_object::xml_array($xml->itemInfo->item);// transform data
+    // compact data:
+    $this->data['cost'] = $this->data['cost'][0]['token'];
+    $this->data['disenchantskillrank'] = $this->data['disenchantloot'][0]['requiredskillrank'];
+    $this->data['disenchantloot'] = $this->data['disenchantloot'][0]['item'];
+    $this->data['vendors'] = $this->data['vendors'][0]['creature'];
   }
   
   public function __get($name){
-    if(!empty( $value = strval($this->xml->itemInfo->item[$name]) ))return $value;
-    return parent::__get($name);// ask parent to handle
+    switch($name){
+      case 'markers': return array_filter($this->data,'tx_wowarmory_item::is_marker');
+      case 'subparts': return array_filter($this->data,'tx_wowarmory_item::is_subpart');
+      default: return $this->data[$name];
+    }
+  }
+  
+  public function __toString(){
+    return t3lib_div::view_array($this->markers).t3lib_div::view_array($this->subparts);
   }
   
   public static function cmp($a,$b){
@@ -25,8 +41,15 @@ class tx_wowarmory_item extends tx_wowarmory_object{
   }
   
   public static function query($itemID){
-    //return tx_wowarmory_object::query(sprintf('http://armory.wow-europe.com/item-info.xml?i=%d',$itemID));
-    return tx_wowarmory_object::query(sprintf('http://localhost/wowarmory/item-info.xml?i=%d',$itemID));
+    return parent::query('item-info',sprintf('i=%d',$itemID));
+  }
+  
+  public static function is_subpart($a){
+    return is_array($a);
+  }
+  
+  public static function is_marker($a){
+    return !is_array($a);
   }
   
 }

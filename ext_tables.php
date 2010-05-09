@@ -5,4 +5,5 @@ if (TYPO3_MODE == 'BE')	{
   t3lib_extMgm::addModule('wowmod','','top',t3lib_extMgm::extPath($_EXTKEY).'mod0/');
   t3lib_extMgm::addModule('wowmod','armory','top',t3lib_extMgm::extPath($_EXTKEY).'mod1/');
 }
+
 ?>

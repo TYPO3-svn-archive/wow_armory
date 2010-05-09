@@ -10,6 +10,9 @@
 //http://armory.wow-europe.com/wow-icons/_images/43x43/inv_enchant_abysscrystal.png
 //http://armory.wow-europe.com/wow-icons/_images/21x21/spell_holy_summonchampion.png
 
+define(ARMORY_URL,'http://armory.wow-europe.com/');
+//define(ARMORY_URL,'http://localhost/');
+
 class tx_wowarmory_object{
   
   public $xml = array();
@@ -31,7 +34,7 @@ class tx_wowarmory_object{
   /*
    * load remote xml data
    */
-	public static function query($url){
+	public static function query($page,$parameters=''){
     $options = array( 'http' => array(
       'user_agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2) Gecko/20100115 Firefox/3.6 (.NET CLR 3.5.30729)',
       'max_redirects' => 10,
@@ -45,6 +48,9 @@ class tx_wowarmory_object{
         'Connection: keep-alive',
       ),
     ));
+		$url = ARMORY_URL.$page.'.xml';
+		if($parameters)$url = $url.'?'.$parameters;
+    print("<!-- tx_wowarmory_object::query(\"".$url."\") -->\n");//DEBUG
 		libxml_use_internal_errors(false);
     libxml_clear_errors();
 		libxml_set_streams_context(stream_context_create($options));
@@ -56,16 +62,16 @@ class tx_wowarmory_object{
   /*
    *  convert a SimpleXMLElement hirachy into an array
    */
-  public static function xml_array(SimpleXMLElement $xml, $key=''){
+  public static function xml_array(SimpleXMLElement $xml){
     $result = array();
-    foreach( $xml->attributes() as $k => $v ){// parse attributes
-      $result[strtolower($k)] = strval($v);
-    }
-    foreach( $xml as $k => $v )if($v[$key]){// parse children
-      $result[strtolower($k)][strval($v[$key])] = self::xml_array($v,$key);
-    }else{
-      $result[strtolower($k)][] = self::xml_array($v,$key);
-    }
+		// parse attributes
+    foreach( $xml->attributes() as $k => $v )$result[strtolower($k)] = strval($v);
+		// parse children
+    foreach( $xml->children() as $k => $v )if($v['id']){
+			$result[strtolower($k)][strval($v['id'])] = self::xml_array($v);
+		}else{
+			$result[strtolower($k)][] = self::xml_array($v);
+		}
     return $result;
   }
 	

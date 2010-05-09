@@ -12,7 +12,8 @@
 			<label index="title">Manage armory data</label>
 			<label index="page.1.title">Dungeons</label>
 			<label index="page.2.title">Character</label>
-			<label index="page.3.title">Item</label>
+			<label index="page.3.title">Guild</label>
+			<label index="page.4.title">Item</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="mlang_tabs_tab">Armory</label>
@@ -21,7 +22,8 @@
 			<label index="title">Verwaltung der Armory</label>
 			<label index="page.1.title">Dungeons</label>
 			<label index="page.2.title">Charaktere</label>
-			<label index="page.3.title">Gegenstand</label>
+			<label index="page.3.title">Gilde</label>
+			<label index="page.4.title">Gegenstand</label>
 		</languageKey>
 	</data>
 </T3locallang>
