@@ -10,8 +10,12 @@
 //http://armory.wow-europe.com/wow-icons/_images/43x43/inv_enchant_abysscrystal.png
 //http://armory.wow-europe.com/wow-icons/_images/21x21/spell_holy_summonchampion.png
 
-define(ARMORY_URL,'http://armory.wow-europe.com/');
-//define(ARMORY_URL,'http://localhost/');
+if($TYPO3_CONF_VARS['SYS']['sitename']=='t3shodan')
+	define(ARMORY_URL,'http://localhost/');
+else
+	define(ARMORY_URL,'http://armory.wow-europe.com/');
+
+print('<pre>');var_dump(ARMORY_URL);print('</pre>');
 
 class tx_wowarmory_object{
   
