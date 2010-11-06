@@ -1,0 +1,16 @@
+# Module configuration
+module.tx_wowarmory {
+	settings {
+	}
+	persistence {
+		storagePid = {$plugin.tx_wowarmory.persistence.storagePid}
+		classes {
+		}
+	}
+	view {
+		templateRootPath = {$module.tx_wowarmory.view.templateRootPath}
+		partialRootPath = {$module.tx_wowarmory.view.partialRootPath}
+		layoutRootPath = {$module.tx_wowarmory.view.layoutRootPath}
+		defaultPid = auto
+	}
+}

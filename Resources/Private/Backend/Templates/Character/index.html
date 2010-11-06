@@ -1,0 +1,26 @@
+<f:layout name="default" />
+
+<f:section name="iconButtons">
+	<f:be.buttons.icon uri="{f:uri.action(action:'new')}" icon="new_el" title="Create new Character" />
+</f:section>
+
+<f:section name="content">
+	<f:if condition="{characters}">
+		<f:then>
+			<p class="bodytext">Here is a list of characters:</p>
+			<ul>
+				<f:for each="{characters}" as="character">
+					<li>
+						<h3>
+							<f:link.action action="index" controller="Character" arguments="{character: character}" title="Edit this Character">
+								{character.name} ({character.realm})
+							</f:link.action>
+							<f:be.buttons.icon uri="{f:uri.action(action:'edit', arguments:{character: character})}" icon="edit2" title="Edit this character" />
+						</h3>
+					</li>
+				</f:for>
+			</ul>
+			<p><f:link.action action="deleteAll">Delete all Characters [!!!]</f:link.action></p>
+		</f:then>
+	</f:if>
+</f:section>

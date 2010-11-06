@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="0dddb27e-26fc-4d5d-9aa5-dea47a5ea7ea" kpf_version="4" name="wow_armory.kpf">
+<URL id="2bd3776a-543d-4137-a62b-ddc3a7a4bdad" idref="0dddb27e-26fc-4d5d-9aa5-dea47a5ea7ea" keyboard_shortcut="" name="Armory (Jobe)">
+http://armory.wow-europe.com/character-sheet.xml?r=Blackhand&amp;n=Jobe</URL>
+<preference-set idref="0dddb27e-26fc-4d5d-9aa5-dea47a5ea7ea">
+  <boolean id="import_live">1</boolean>
+</preference-set>
+</project>

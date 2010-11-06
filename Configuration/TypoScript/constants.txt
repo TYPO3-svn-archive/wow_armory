@@ -1,0 +1,16 @@
+plugin.tx_wowarmory {
+	persistence {
+		 # cat=plugin.tx_wowarmory//a; type=int+; label=Default storage PID
+		storagePid =
+	}
+}
+module.tx_wowarmory {
+	view {
+		 # cat=module.tx_wowarmory/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:wow_armory/Resources/Private/Backend/Templates/
+		 # cat=plugin.tx_wowarmory/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:wow_armory/Resources/Private/Partials/
+		 # cat=plugin.tx_wowarmory/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:wow_armory/Resources/Private/Backend/Layouts/
+	}
+}
